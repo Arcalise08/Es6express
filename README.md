@@ -15,6 +15,10 @@
 
 ## Considerations
 
+- We **DONT** use babel to transpile in this package. Babel is slow(and not great. although just my opinion) This is why the node requirement is so high. 
+  To get the best ES6 features you must install the newest node. You can implement babel yourself if you find yourself
+  wanting to use a lower node version. It should be known that package ```swagger-jsdoc``` does not play well with babel and you will need to rewrite 
+  most of the project meaning you should probably just generate a fresh project instead of copying this one.
 - This project is set-up using swagger for documentation and swagger-jsdoc for automatic documentation. Swagger is extremely customizable and have tons of options. You can review the code to see its basic usage or learn more about it [here](https://swagger.io/).
 - We're using bcrypt for crypto functions.(hashing passwords is all its used for atm)
 - Passport is used for all authentication. The project is preconfigured for JWT and local strategies but you can check [here](http://www.passportjs.org/packages/) for configurations for over 500 different authentication strategies.
