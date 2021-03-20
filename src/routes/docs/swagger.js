@@ -4,6 +4,7 @@ import express from "express";
 
 const app = express.Router();
 
+
 const openApi = "3.0.0"
 const version = "0.1.0";
 const title = "Blank Slate"
@@ -82,10 +83,10 @@ const swagOptionsHome = {
                 url: '/swagger/media',
                 name: 'Media API'
             },
-        ]
+        ],
     },
     customCss: '.scheme-container { background-color: #fafafa !important }',
-    customJs: '/js/helper.js'
+    customJs: '/js/swagger_ui.js'
 }
 
 app.get('/swagger/account',(req, res) => {
@@ -100,5 +101,7 @@ app.get('/swagger/users',(req, res) => {
 });
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(accountSpec, swagOptionsHome));
+
+
 
 export default app;

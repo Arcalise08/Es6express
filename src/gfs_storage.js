@@ -3,12 +3,12 @@ import crypto from 'crypto';
 import path from 'path';
 import GridFsStorage from "multer-gridfs-storage";
 import multer from "multer";
+import dotenv from "dotenv";
+dotenv.config()
 
-// MAKE SURE YOU HAVE A .env FILE IN THE ROOT DIR
-//it should use process.env.CONNECTION_URI for mongodb
-const dbURL = process.env.CONNECTION_URI;
 
-const connect = await mongoose.connect(dbURL,
+
+const connect = await mongoose.connect(process.env.CONNECTION_URI,
     { useNewUrlParser: true, useUnifiedTopology: true });
 
 const storage = new GridFsStorage({ db: connect,
@@ -28,5 +28,7 @@ const storage = new GridFsStorage({ db: connect,
     }
 })
 
-
+export const gfs = new mongoose.mongo.GridFSBucket(connect.connection.db, {
+    bucketName: "media"
+})
 export const upload = multer({ storage })

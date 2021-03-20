@@ -1,7 +1,7 @@
 import passport from "../strategies/local.js";
 import {upload} from "../gfs_storage.js";
 import {apiResponse} from "../helpers.js";
-
+import {gfs} from "../gfs_storage.js";
 
 
 /**
@@ -37,6 +37,14 @@ import {apiResponse} from "../helpers.js";
 export const UploadImage = (router) => {
     router.post("/api/media/uploadImage", upload.single('img'), (req, res) => {
         if (req?.file?.filename) {
+            res.status(201).json(apiResponse({
+                data: {
+                    url: `/api/media/${req.file.filename}`
+                }
+            }))
+        }
+        else {
+            res.status(500).json(apiResponse({success: false, msg: "error_uploading"}))
         }
     })
 }
@@ -56,7 +64,7 @@ export const UploadImage = (router) => {
  *        "404":
  *          description: couldn't find that file.
  */
-export const GetMediaURL = (router, gfs) => {
+export const GetMediaURL = (router) => {
     router.get("/api/media/:filename",  async (req, res) => {
         try {
             gfs.find({ filename: req.params.filename}).toArray((err, files) => {
@@ -115,21 +123,13 @@ export const GetMediaURL = (router, gfs) => {
  *       500:
  *         description: Exception has been raised
  */
-export const UploadVoice = (router, gfs) => {
+export const UploadVoice = (router) => {
     router.post("/api/media/uploadVoice",passport.authenticate('jwt', { session: false }),  async (req, res) => {
-        const resp = {...responseObj}
         try {
-            delete resp.page
-            resp.success = false
-            resp.msg = "Not yet implemented"
-            res.status(501).json(resp)
+            res.status(501).json(apiResponse({success: false, msg:"not_implemented"}))
         }
         catch {
-            delete resp.page;
-            resp.success = false;
-            resp.msg = "unknown_error"
-            res.status(500).json(resp);
-
+            res.status(501).json(apiResponse({success: false, msg:"not_implemented"}))
         }
     })
 }

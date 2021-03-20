@@ -1,9 +1,7 @@
 import express from 'express';
-import mongoose from "mongoose";
 import logger from 'morgan'
 import bodyParser from 'body-parser'
 import {apiResponse} from "./helpers.js";
-
 import {GetMediaURL, UploadImage, UploadVoice} from "./routes/media.js";
 import swagger from "./routes/docs/swagger.js";
 import accounts from "./routes/account.js";
@@ -11,11 +9,6 @@ import users from "./routes/users.js";
 
 const app = express()
 
-const {db} = mongoose.connection;
-
-const gfs = new mongoose.mongo.GridFSBucket(db, {
-    bucketName: "media"
-})
 
 
 app.use(logger('dev'));
@@ -39,9 +32,9 @@ app.use(users);
 ///////////\\\\\\\\\\\\\\
 
 //***Media Endpoints***\\
-UploadImage(app, gfs)
-UploadVoice(app, gfs)
-GetMediaURL(app, gfs)
+UploadImage(app)
+UploadVoice(app)
+GetMediaURL(app)
 ///////////\\\\\\\\\\\\\\\
 
 
@@ -53,3 +46,5 @@ const port = process.env.PORT || 3000
 app.listen(port, () => {
     console.log(`App is listening on ${port}`)
 })
+
+export default app;

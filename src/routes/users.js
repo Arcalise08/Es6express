@@ -6,7 +6,7 @@ import express from "express";
 const router = express.Router();
 /**
  * @swagger
- *  /api/users/{userId}:
+ *  /api/users/search?{userId}:
  *    get:
  *      summary: Get a user by id
  *      tags: [Users]
@@ -23,10 +23,11 @@ const router = express.Router();
  *        "404":
  *          description: Couldnt find user
  */
-router.get("/api/users/:userId",passport.authenticate('jwt', { session: false }),  async (req, res) => {
+router.get("/api/users/search?:userId",passport.authenticate('jwt', { session: false }),  async (req, res) => {
     const checkUserId = isObjectID(req?.params?.userId)
     if (!req.params.userId || !checkUserId) {
         res.status(400).json(apiResponse({success: false, msg: "invalid_user_id"}));
+        return;
     }
 
     let checkUser = null;
@@ -151,16 +152,21 @@ router.put("/api/users/update",passport.authenticate('jwt', { session: false }),
  *          description: Couldnt find user
  */
 
-
-router.get("/api/users/myProfile",passport.authenticate('jwt', { session: false }),  async (req, res) => {
+router.get("/api/users/myProfile",passport.authenticate('jwt', { session: false }),
+    async (req, res) => {
     const checkUser = await Users.findById(req.user._id);
     if (checkUser) {
-        const temp = {...checkUser}
-        delete temp.password
-        res.status(200).json(apiResponse({data: temp}));
+        const serve = {
+            username: checkUser?.username,
+            email: checkUser?.email,
+            id: checkUser?._id,
+            phoneNumber: checkUser?.phoneNumber ?? null,
+            image: checkUser?.image ?? null
+        }
+        res.status(200).json(apiResponse({data: serve}));
     }
     else {
-        res.status(404).json(apiResponse({success: false, msg: "user_not_found"}));
+    res.status(404).json(apiResponse({success: false, msg: "user_not_found"}));
     }
 })
 
