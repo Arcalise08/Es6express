@@ -23,13 +23,20 @@
 
 
 ## Setup
-
-1. Install node v15.11.0(For access to the latest ES6 features, It may work on later or newer versions but i make no promises.)
+Follow these instructions to set up the project. The first two can be skipped however the versions are what this project
+were generated on and thus I can guarentee they work on those version. I highly suggest you install those versions.
+1. Install node v15.11.0
 2. Install npm v7.6.0
-3. ``` npm i nodemon -g```
-4. Rename ***env_template*** to ***.env***
-5. open ***.env*** and replace details with your own
-6. ``` npm i && npm start ```
+3. ``` npm i nodemon -g``` You may skip the ```-g``` if you prefer not to install globally. 
+   But nodemon suggest installing it globally for better functionality
+4. ```git clone https://github.com/Arcalise08/Es6express.git```
+5. Rename ***env_template*** to ***.env***
+6. open ***.env*** and replace details with your own
+7. ``` npm i && npm start ```
 
 ## Usage
-This project isn't meant to be used on its own. Its a boilerplate and should be added to. If your looking for a full fledged express server, look elsewhere. If you're looking for a great starting point for your own express server(And you use mongodb) this is likely for you!
+This project isn't meant to be used on its own. Its a boilerplate and should be added to. If your looking for a full fledged express server, look elsewhere.
+If you're looking for a great starting point for your own express server(And you use mongodb) this is likely for you!
+
+You can ```npm start``` and go to ***localhost:3000/swagger*** to see the endpoints current available
+and also test them.
